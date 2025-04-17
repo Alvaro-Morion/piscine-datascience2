@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres:15
+    container_name: db
+    env_file: ../.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - default
+  
+  pgAdmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    env_file: ../.env
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - default
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    configs:
+      - source: servers.json
+        target: /pgadmin4/servers.json
+
+volumes:
+  postgres_data:
+    name: postgress_data
+    external: true
+
+  pgadmin-data:
+    name: pgadmin-data
+networks:
+  default:
+    driver: bridge
+
+configs:
+  servers.json:
+    file: servers.json

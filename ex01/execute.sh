@@ -1,0 +1,1 @@
+cat ./customers_table.sql | docker exec -i db psql -U amorion- -d piscineds
