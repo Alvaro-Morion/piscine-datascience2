@@ -1,0 +1,1 @@
+cat ./remove_duplicates.sql | docker exec -i db psql -U amorion- -d piscineds
